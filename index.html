@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>One Piece Reader</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <script>
+    window.onload = function() {
+      // Selecting the elements
+      let volume = document.getElementById('volume');
+      let capitolo = document.getElementById('capitolo');
+      let pagina = 1
+      let img = document.getElementById('img');
+
+      let btnPrevVolume = document.getElementById('btnPrevVolume');
+      let btnNextVolume = document.getElementById('btnNextVolume');
+      let btnPrevCapitolo = document.getElementById('btnPrevCapitolo');
+      let btnNextCapitolo = document.getElementById('btnNextCapitolo');
+      let btnPrevPagina = document.getElementById('btnPrevPagina');
+      let btnNextPagina = document.getElementById('btnNextPagina');
+
+      // Funzione per aggironare l'immagine
+      const updateImage = () => {
+        let volumeFormat = volume.value.toString().padStart(3, '0');
+        let capitoloFormat = capitolo.value.toString().padStart(3, '0');
+        let paginaFormat = pagina.toString().padStart(2, '0');
+        img.src = `https://onepiecepower.com/manga8/onepiece/volumi/volume${volumeFormat}/${capitoloFormat}/${paginaFormat}.jpg`;
+      };
+
+      // funzione per aggiornare il capitolo
+      const updateCapitolo = () => {
+        let volumeFormat = volume.value.toString().padStart(3, '0');
+        let capitoloFormat = capitolo.value.toString().padStart(3, '0');
+        pagina = 1;
+        img.src = `https://onepiecepower.com/manga8/onepiece/volumi/volume${volumeFormat}/${capitoloFormat}/01.jpg`;
+      };
+
+      // Event listeners for volume, capitolo, e pagina 
+      btnPrevVolume.addEventListener('click', () => {
+        let volumeValue = Number(volume.value);
+        if (volumeValue > 1) {
+          volume.value = volumeValue - 1;
+        }
+        updateCapitolo();
+      });
+
+      btnNextVolume.addEventListener('click', () => {
+        let volumeValue = Number(volume.value);
+        volume.value = volumeValue + 1;
+        updateCapitolo();
+      });
+
+      btnPrevCapitolo.addEventListener('click', () => {
+        let capitoloValue = Number(capitolo.value);
+        if (capitoloValue > 1) {
+          capitolo.value = capitoloValue - 1;
+        }
+        updateCapitolo();
+      });
+
+      btnNextCapitolo.addEventListener('click', () => {
+        let capitoloValue = Number(capitolo.value);
+        capitolo.value = capitoloValue + 1;
+        updateCapitolo();
+      });
+
+      btnPrevPagina.addEventListener('click', () => {
+        if (pagina > 1) {
+          pagina = pagina - 1;
+          updateImage();
+        }
+      });
+
+
+      btnNextPagina.addEventListener('click', () => {
+        pagina = pagina + 1;
+        updateImage();
+      });
+
+      // Funzioni sul click dei tasti della tastiera
+      document.addEventListener('keydown', (event) => {
+        if (event.key === "ArrowLeft") {
+          if (pagina > 1) {
+          pagina = pagina - 1;
+          updateImage();
+        }
+      } 
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === "ArrowRight") {
+          pagina = pagina + 1;
+          updateImage();
+        }
+      });
+    }
+  </script>
+  <style>
+    *{
+      margin:0px;
+    }
+
+    .controller-volume,
+    .controller-capitolo,
+    .img-controller{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+    }
+    .btn{
+      height:40px;
+      width: 40px;
+      border-radius: 10px;
+    }
+    input{
+      text-transform: uppercase;
+      margin: 0 0 0 10px;
+      width: 50px;
+      display: flex;
+    }
+
+    .img-controller{
+      position: relative;
+    }
+
+    .btn-page{
+      position: absolute;
+      background: transparent;
+      height: 100%;
+      width: 10%;
+    }
+    .left{
+      left:0;
+    }
+
+    .right{
+      right:0;
+    }
+
+    @media screen and (min-width: 1024px){
+      img{
+        height:100% ;
+      }
+    }
+  </style>
+
+  <div class="controller-volume-capitolo">
+    <div class="controller-volume">
+      <!-- Volume Controls -->
+      <button id="btnPrevVolume"class="btn" >←</button>
+      <label for="volume" class="font-semibold">Volume</label>
+      <input type="text" id="volume" value="1" >
+      <button id="btnNextVolume"class="btn">→</button>
+    </div>
+    <div class="controller-capitolo">
+      <!-- Capitolo Controls -->
+      <button id="btnPrevCapitolo"class="btn">←</button>
+      <label for="capitolo" class="font-semibold">Capitolo</label>
+      <input type="text" id="capitolo" value="1" >
+      <button id="btnNextCapitolo"class="btn">→</button>
+    </div>
+  </div>
+
+  <div class="img-controller">
+    <button class="btn-page left" id="btnPrevPagina" ></button>
+    <img id="img" src="https://onepiecepower.com/manga8/onepiece/volumi/volume001/001/01.jpg" alt="One Piece Page"/>
+    <button class="btn-page right" id="btnNextPagina" ></button>
+  </div>
+
+</body>
+</html>
