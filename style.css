@@ -26,6 +26,9 @@
     position: relative;
   }
 
+  .btn-page:hover{
+    background-color: rgba(95, 158, 160, 0.171);
+  }
   .btn-page{
     position: absolute;
     background: transparent;
