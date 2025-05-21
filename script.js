@@ -13,7 +13,9 @@ class OnePieceCapitolo {
         this.Pagina++;
     }
     prevPagina(){
-        this.Pagina--;
+        if(this.Pagina < 0){
+            this.Pagina--
+        }
     }
     setPagina(pagina){
         this.Pagina = pagina
@@ -54,7 +56,9 @@ class ReaderElement
         this.element.value = value;
     }
     prev(){
-        this.element.value--;
+        if(this.element.value < 0){
+            this.element.value--
+        }
     }
     next(){
         this.element.value++;
