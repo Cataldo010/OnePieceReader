@@ -13,7 +13,7 @@ class OnePieceCapitolo {
         this.Pagina++;
     }
     prevPagina(){
-        if(this.Pagina > 0){
+        if(this.Pagina > 1){
             this.Pagina--
         }
     }
@@ -56,7 +56,7 @@ class ReaderElement
         this.element.value = value;
     }
     prev(){
-        if(this.element.value > 0){
+        if(this.element.value > 1){
             this.element.value--
         }
     }
@@ -117,8 +117,6 @@ window.onload = function(){
         aggiorna();
     });
 }
-
-
 
 function salvaStato(reader) {
     const data = {
