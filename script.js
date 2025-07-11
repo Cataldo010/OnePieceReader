@@ -116,6 +116,9 @@ window.onload = function(){
         reader.nextPagina();
         aggiorna();
     });
+    document.getElementById("btn_go").addEventListener("click", function() {
+        aggiorna();
+    })
 }
 
 function salvaStato(reader) {

@@ -4,6 +4,7 @@
 
   .controller-volume,
   .controller-capitolo,
+  .controller-leggi,
   .img-controller{
     display: flex;
     align-items: center;
@@ -14,6 +15,16 @@
     height:40px;
     width: 40px;
     border-radius: 10px;
+  }
+
+  .btn_leggi{
+    height: 40px;
+    width: 100px;
+    border-radius: 10px;
+    background-color: rgba(95, 158, 160, 0.171);
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
   }
   input{
     text-transform: uppercase;
