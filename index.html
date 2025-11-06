@@ -51,7 +51,6 @@
         <button id="btn_NextCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">+</button>
       </div>
       <button id="btn_go" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded font-bold">Leggi</button>
-      <button id="btn_toggle_mode" class="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 rounded font-bold">313 Modalità</button>
     </nav>
   </aside>
 
@@ -61,7 +60,9 @@
   <!-- Image Viewer -->
   <main class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
     <button id="btn_PrevPagine" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10">←</button>
-    <img id="img" src="" alt="Manga Page" class="absolute max-w-none max-h-none object-contain z-0 transition-transform duration-300" />
+    <div id="contenitore">
+      <img id="img" src="" alt="Manga Page" class="" />
+    </div>
     <button id="btn_NextPagine" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10">→</button>
   </main>
 
@@ -198,9 +199,7 @@
         aggiorna();
       });
 
-      document.getElementById('btn_toggle_mode').addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-      });
+
 
       const drawer = document.getElementById('drawer');
       const overlay = document.getElementById('overlay');
@@ -254,6 +253,20 @@
         if (e.key === 'ArrowLeft') document.getElementById('btn_PrevPagine').click();
         if (e.key === 'ArrowRight') document.getElementById('btn_NextPagine').click();
       });
+
+
+const elem = document.getElementById('img');
+  const panzoom = Panzoom(elem, {
+    maxScale: 5,
+    minScale: 1,
+    contain: 'outside'
+  });
+
+      
+
+  // Abilita lo zoom con la rotella del mouse
+  document.getElementById('contenitore').addEventListener('wheel', panzoom.zoomWithWheel);
+
     };
   </script>
 </body>
