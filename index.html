@@ -1,43 +1,68 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>One Piece Reader</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="icon" href="OnePiece.svg" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnePiece Reader</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="script.js" defer></script>
-  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class'
+    }
+  </script>
+  <style>
+    body {
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #img {
+      cursor: grab;
+    }
+    #img:active {
+      cursor: grabbing;
+    }
+  </style>
 </head>
-<body>
-  <div class="controller-volume-capitolo">
-    <div class="controller-volume">
-      <!-- Volume Controls -->
-      <button id="btn_PrevVolume"class="btn" >←</button>
-      <label for="volume" class="font-semibold">Volume</label>
-      <input type="text" id="volume" value="1" >
-      <button id="btn_NextVolume"class="btn">→</button>
+<body id="body" class="dark bg-gray-900 text-white h-screen overflow-hidden">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center p-4 bg-gray-800 shadow-md">
+    <div class="flex items-center gap-4">
+      <button id="btn_drawer" class="text-white bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded">☰</button>
+      <h1 class="text-xl font-bold">OnePiece Reader</h1>
     </div>
-    <div class="controller-capitolo">
-      <!-- Capitolo Controls -->
-      <button id="btn_PrevCapitolo"class="btn">←</button>
-      <label for="capitolo" class="font-semibold">Capitolo</label>
-      <input type="text" id="capitolo" value="1" >
-      <button id="btn_NextCapitolo"class="btn">→</button>
-    </div>
-    <div class="controller-leggi">
-      <button id="btn_go"class="btn_leggi">Leggi</button>
-    </div>
-  </div>
-  <!-- Img Controls-->
-  <div class="img-controller">
-    <button class="btn-page left" id="btn_PrevPagine" ></button>
-    <img id="img" src="https://onepiecepower.com/manga8/onepiece/volumi/volume001/001/01.jpg" alt="One Piece Page"/>
-    <button class="btn-page right" id="btn_NextPagine" ></button>
-  </div>
+  </header>
+
+  <!-- Drawer -->
+  <aside id="drawer" class="fixed top-0 left-0 h-full w-72 bg-gray-800 text-white transform -translate-x-full transition-transform duration-300 z-50">
+    <div class="p-4 border-b border-gray-700 font-bold text-lg">Menu</div>
+    <nav class="flex flex-col p-4 gap-4">
+      <label for="volume">Volume</label>
+      <div class="flex gap-2 items-center">
+        <button id="btn_PrevVolume" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">-</button>
+        <input type="text" id="volume" value="1" class="text-black px-2 py-1 rounded w-16 text-center" />
+        <button id="btn_NextVolume" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">+</button>
+      </div>
+      <label for="capitolo">Capitolo</label>
+      <div class="flex gap-2 items-center">
+        <button id="btn_PrevCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">-</button>
+        <input type="text" id="capitolo" value="1" class="text-black px-2 py-1 rounded w-16 text-center" />
+        <button id="btn_NextCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">+</button>
+      </div>
+      <button id="btn_go" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded font-bold">Leggi</button>
+    </nav>
+  </aside>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
+
+  <!-- Image Viewer -->
+  <main class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
+    <button id="btn_PrevPagine" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10">←</button>
+    <img id="img" src="" alt="Manga Page" class="absolute max-w-none max-h-none object-contain z-0 transition-transform duration-300" />
+    <button id="btn_NextPagine" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10">→</button>
+  </main>
 
 </body>
 </html>
