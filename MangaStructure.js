@@ -1,7 +1,7 @@
 import { ReaderElement } from "./ReaderElement.js";
-import { OnePieceMangaList } from "./OnepIeceManga.js";
+import { MangaList } from "./Manga.js";
 
-class OnePieceCapitolo {
+class MangaStructure {
   constructor(volume, capitolo, pagina, img,titolo) {
       this.ElemVolume = new ReaderElement(volume);
       this.ElemCapitolo = new ReaderElement(capitolo);
@@ -9,7 +9,7 @@ class OnePieceCapitolo {
       this.img = img;
       this.BasePath = `https://onepiecepower.com/manga8/onepiece/volumi/volume`;
       this.Titolo = titolo;
-      this.onePieceMangaList = new OnePieceMangaList();
+      this.onePieceMangaList = new MangaList();
   }
   nextPagina() {
     this.Pagina++;
@@ -61,4 +61,4 @@ function caricaStato() {
     return null;
   }
 }
-export { OnePieceCapitolo ,salvaStato, caricaStato};
+export { MangaStructure as OnePieceCapitolo ,salvaStato, caricaStato};
