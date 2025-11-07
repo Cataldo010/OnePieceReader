@@ -61,4 +61,4 @@ function caricaStato() {
     return null;
   }
 }
-export { MangaStructure as OnePieceCapitolo ,salvaStato, caricaStato};
+export { MangaStructure ,salvaStato, caricaStato};
