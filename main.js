@@ -93,10 +93,49 @@ window.onload = function () {
     overlay.classList.add("hidden");
   });
 
- document.addEventListener("keydown", (e) => {
+  let scale = 1;
+  let originX = 0;
+  let originY = 0;
+
+  imgElem.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    const rect = imgElem.getBoundingClientRect();
+    originX = ((e.clientX - rect.left) / rect.width) * 100;
+    originY = ((e.clientY - rect.top) / rect.height) * 100;
+    scale += e.deltaY * -0.001;
+    scale = Math.min(Math.max(0.5, scale), 3);
+    imgElem.style.transformOrigin = `${originX}% ${originY}%`;
+    imgElem.style.transform = `scale(${scale})`;
+  });
+
+  let isDragging = false;
+  let startX, startY;
+  let currentX = 0,
+    currentY = 0;
+
+  imgElem.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startX = e.clientX - currentX;
+    startY = e.clientY - currentY;
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+    currentX = e.clientX - startX;
+    currentY = e.clientY - startY;
+    imgElem.style.left = `${currentX}px`;
+    imgElem.style.top = `${currentY}px`;
+  });
+
+  document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft")
       document.getElementById("btn_PrevPagine").click();
     if (e.key === "ArrowRight")
       document.getElementById("btn_NextPagine").click();
   });
+
 };
