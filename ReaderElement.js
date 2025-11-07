@@ -6,7 +6,7 @@ class ReaderElement {
     return this.element.value.toString().padStart(3, "0");
   }
   get() {
-    return this.element.valu;
+    return this.element.value;
   }
   set(value) {
     this.element.value = value;

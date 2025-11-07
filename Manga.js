@@ -1397,6 +1397,7 @@ getTitolo(volume, capitolo) {
     (m) => m.Volume == volume && m.Capitolo == capitolo
   );
 
+
   if (!manga) {
     // Nessun elemento trovato
     console.warn(`⚠️ Nessun titolo trovato per Volume ${volume}, Capitolo ${capitolo}`);
@@ -1408,5 +1409,9 @@ getTitolo(volume, capitolo) {
     ? manga.Titolo
     : "Titolo non disponibile";
 }
+
+getLast() {
+  return this.mangaArray[this.mangaArray.length - 1];
+};
 }
 
