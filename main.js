@@ -1,5 +1,5 @@
-import { OnePieceCapitolo } from "./OnePieceCapitolo.js";
-import { salvaStato, caricaStato } from "./OnePieceCapitolo.js";
+import { OnePieceCapitolo } from "./MangaStructure.js";
+import { salvaStato, caricaStato } from "./MangaStructure.js";
 
 window.onload = function () {
   const volumeElem = document.getElementById("volume");
