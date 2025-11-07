@@ -1,11 +1,15 @@
 import { ReaderElement } from "./ReaderElement.js";
+import { OnePieceMangaList } from "./OnepIeceManga.js";
+
 class OnePieceCapitolo {
-  constructor(volume, capitolo, pagina, img) {
-    this.ElemVolume = new ReaderElement(volume);
-    this.ElemCapitolo = new ReaderElement(capitolo);
-    this.Pagina = 1;
-    this.img = img;
-    this.BasePath = `https://onepiecepower.com/manga8/onepiece/volumi/volume`;
+  constructor(volume, capitolo, pagina, img,titolo) {
+      this.ElemVolume = new ReaderElement(volume);
+      this.ElemCapitolo = new ReaderElement(capitolo);
+      this.Pagina = 1;
+      this.img = img;
+      this.BasePath = `https://onepiecepower.com/manga8/onepiece/volumi/volume`;
+      this.Titolo = titolo;
+      this.onePieceMangaList = new OnePieceMangaList();
   }
   nextPagina() {
     this.Pagina++;
@@ -22,6 +26,7 @@ class OnePieceCapitolo {
     return this.Pagina.toString().padStart(2, "0");
   }
   updateImg() {
+    this.Titolo.textContent  = this.onePieceMangaList.getTitolo(this.ElemVolume.element.value, this.ElemCapitolo.element.value);
     this.img.src = `${
       this.BasePath
     }${this.ElemVolume.getPad()}/${this.ElemCapitolo.getPad()}/${this.PaginaPad()}.jpg`;
@@ -32,6 +37,7 @@ class OnePieceCapitolo {
       volume: this.ElemVolume.get(),
       capitolo: this.ElemCapitolo.get(),
       pagina: this.Pagina,
+      titolo: this.Titolo,
     };
     localStorage.setItem("onepiece_reader", JSON.stringify(data));
   }

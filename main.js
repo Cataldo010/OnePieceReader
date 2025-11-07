@@ -6,12 +6,14 @@ window.onload = function () {
   const capitoloElem = document.getElementById("capitolo");
   const paginaElem = document.createElement("input");
   const imgElem = document.getElementById("img");
+  const titolo = document.getElementById("titolo");
 
   let reader = new OnePieceCapitolo(
     volumeElem,
     capitoloElem,
     paginaElem,
-    imgElem
+    imgElem,
+    titolo
   );
 
   const stato = caricaStato();
@@ -129,5 +131,4 @@ window.onload = function () {
   });
 
   const elem = document.getElementById("img");
-
 };
