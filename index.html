@@ -1,273 +1,126 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manga Reader</title>
-  <link rel="icon" href="OnePiece.svg" type="image/x-icon">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class'
-    }
-  </script>
-  <style>
-    body {
-      transition: background-color 0.3s, color 0.3s;
-    }
-    #img {
-      cursor: grab;
-    }
-    #img:active {
-      cursor: grabbing;
-    }
-  </style>
-</head>
-<body id="body" class="dark bg-gray-900 text-white h-screen overflow-hidden">
-
-  <!-- Header -->
-  <header class="flex justify-between items-center p-4 bg-gray-800 shadow-md">
-    <div class="flex items-center gap-4">
-      <button id="btn_drawer" class="text-white bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded">☰</button>
-      <h1 class="text-xl font-bold">OnePiece Reader</h1>
-    </div>
-  </header>
-
-  <!-- Drawer -->
-  <aside id="drawer" class="fixed top-0 left-0 h-full w-72 bg-gray-800 text-white transform -translate-x-full transition-transform duration-300 z-50">
-    <div class="p-4 border-b border-gray-700 font-bold text-lg">Menu</div>
-    <nav class="flex flex-col p-4 gap-4">
-      <label for="volume">Volume</label>
-      <div class="flex gap-2 items-center">
-        <button id="btn_PrevVolume" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">-</button>
-        <input type="text" id="volume" value="1" class="text-black px-2 py-1 rounded w-16 text-center" />
-        <button id="btn_NextVolume" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">+</button>
-      </div>
-      <label for="capitolo">Capitolo</label>
-      <div class="flex gap-2 items-center">
-        <button id="btn_PrevCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">-</button>
-        <input type="text" id="capitolo" value="1" class="text-black px-2 py-1 rounded w-16 text-center" />
-        <button id="btn_NextCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">+</button>
-      </div>
-      <button id="btn_go" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded font-bold">Leggi</button>
-    </nav>
-  </aside>
-
-  <!-- Overlay -->
-  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
-
-  <!-- Image Viewer -->
-  <main class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
-    <button id="btn_PrevPagine" class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10">←</button>
-    <div id="contenitore">
-      <img id="img" src="" alt="Manga Page" class="" />
-    </div>
-    <button id="btn_NextPagine" class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10">→</button>
-  </main>
-
-  <script>
-    class ReaderElement {
-      constructor(element) {
-        this.element = element;
-      }
-      getPad() {
-        return this.element.value.toString().padStart(3, '0');
-      }
-      get() {
-        return this.element.value;
-      }
-      set(value) {
-        this.element.value = value;
-      }
-      prev() {
-        if (this.element.value > 1) {
-          this.element.value--;
-        }
-      }
-      next() {
-        this.element.value++;
-      }
-    }
-
-    class OnePieceCapitolo {
-      constructor(volume, capitolo, pagina, img) {
-        this.ElemVolume = new ReaderElement(volume);
-        this.ElemCapitolo = new ReaderElement(capitolo);
-        this.Pagina = 1;
-        this.img = img;
-        this.BasePath = `https://onepiecepower.com/manga8/onepiece/volumi/volume`;
-      }
-      nextPagina() {
-        this.Pagina++;
-      }
-      prevPagina() {
-        if (this.Pagina > 1) {
-          this.Pagina--;
-        }
-      }
-      setPagina(pagina) {
-        this.Pagina = pagina;
-      }
-      PaginaPad() {
-        return this.Pagina.toString().padStart(2, "0");
-      }
-      updateImg() {
-        this.img.src = `${this.BasePath}${this.ElemVolume.getPad()}/${this.ElemCapitolo.getPad()}/${this.PaginaPad()}.jpg`;
-        this.saveToStorage();
-      }
-      saveToStorage() {
-        const data = {
-          volume: this.ElemVolume.get(),
-          capitolo: this.ElemCapitolo.get(),
-          pagina: this.Pagina
-        };
-        localStorage.setItem("onepiece_reader", JSON.stringify(data));
-      }
-    }
-
-    function salvaStato(reader) {
-      const data = {
-        volume: reader.ElemVolume.get(),
-        capitolo: reader.ElemCapitolo.get(),
-        pagina: reader.Pagina
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manga Reader</title>
+    <link rel="icon" href="OnePiece.svg" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="main.js" defer></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
       };
-      localStorage.setItem("onepiece_reader", JSON.stringify(data));
-    }
-
-    function caricaStato() {
-      const data = localStorage.getItem("onepiece_reader");
-      if (!data) return null;
-      try {
-        return JSON.parse(data);
-      } catch (e) {
-        return null;
+    </script>
+    <style>
+      body {
+        transition: background-color 0.3s, color 0.3s;
       }
-    }
-
-    window.onload = function () {
-      const volumeElem = document.getElementById("volume");
-      const capitoloElem = document.getElementById("capitolo");
-      const paginaElem = document.createElement("input");
-      const imgElem = document.getElementById("img");
-
-      let reader = new OnePieceCapitolo(volumeElem, capitoloElem, paginaElem, imgElem);
-
-      const stato = caricaStato();
-      if (stato) {
-        reader.ElemVolume.set(stato.volume);
-        reader.ElemCapitolo.set(stato.capitolo);
-        reader.setPagina(parseInt(stato.pagina));
+      #img {
+        cursor: grab;
       }
+      #img:active {
+        cursor: grabbing;
+      }
+    </style>
+  </head>
+  <body id="body" class="dark bg-gray-900 text-white h-screen overflow-hidden">
+    <!-- Header -->
+    <header class="flex justify-between items-center p-4 bg-gray-800 shadow-md">
+      <div class="flex items-center gap-4">
+        <button
+          id="btn_drawer"
+          class="text-white bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded"
+        >
+          ☰
+        </button>
+        <h1 class="text-xl font-bold">OnePiece Reader</h1>
+      </div>
+    </header>
 
-      reader.updateImg();
+    <!-- Drawer -->
+    <aside
+      id="drawer"
+      class="fixed top-0 left-0 h-full w-72 bg-gray-800 text-white transform -translate-x-full transition-transform duration-300 z-50"
+    >
+      <div class="p-4 border-b border-gray-700 font-bold text-lg">Menu</div>
+      <nav class="flex flex-col p-4 gap-4">
+        <label for="volume">Volume</label>
+        <div class="flex gap-2 items-center">
+          <button
+            id="btn_PrevVolume"
+            class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded"
+          >
+            -
+          </button>
+          <input
+            type="text"
+            id="volume"
+            value="1"
+            class="text-black px-2 py-1 rounded w-16 text-center"
+          />
+          <button
+            id="btn_NextVolume"
+            class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded"
+          >
+            +
+          </button>
+        </div>
+        <label for="capitolo">Capitolo</label>
+        <div class="flex gap-2 items-center">
+          <button
+            id="btn_PrevCapitolo"
+            class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded"
+          >
+            -
+          </button>
+          <input
+            type="text"
+            id="capitolo"
+            value="1"
+            class="text-black px-2 py-1 rounded w-16 text-center"
+          />
+          <button
+            id="btn_NextCapitolo"
+            class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded"
+          >
+            +
+          </button>
+        </div>
+        <button
+          id="btn_go"
+          class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded font-bold"
+        >
+          Leggi
+        </button>
+      </nav>
+    </aside>
 
-      const aggiorna = () => {
-        reader.updateImg();
-        salvaStato(reader);
-      };
+    <!-- Overlay -->
+    <div
+      id="overlay"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"
+    ></div>
 
-      document.getElementById("btn_PrevVolume").addEventListener("click", function () {
-        reader.ElemVolume.prev();
-        reader.setPagina(1);
-        aggiorna();
-      });
-      document.getElementById("btn_NextVolume").addEventListener("click", function () {
-        reader.ElemVolume.next();
-        reader.setPagina(1);
-        aggiorna();
-      });
-      document.getElementById("btn_PrevCapitolo").addEventListener("click", function () {
-        reader.ElemCapitolo.prev();
-        reader.setPagina(1);
-        aggiorna();
-      });
-      document.getElementById("btn_NextCapitolo").addEventListener("click", function () {
-        reader.ElemCapitolo.next();
-        reader.setPagina(1);
-        aggiorna();
-      });
-      document.getElementById("btn_PrevPagine").addEventListener("click", function () {
-        reader.prevPagina();
-        aggiorna();
-      });
-      document.getElementById("btn_NextPagine").addEventListener("click", function () {
-        reader.nextPagina();
-        aggiorna();
-      });
-      document.getElementById("btn_go").addEventListener("click", function () {
-        aggiorna();
-      });
-
-
-
-      const drawer = document.getElementById('drawer');
-      const overlay = document.getElementById('overlay');
-      document.getElementById('btn_drawer').addEventListener('click', () => {
-        drawer.classList.toggle('-translate-x-full');
-        overlay.classList.toggle('hidden');
-      });
-      overlay.addEventListener('click', () => {
-        drawer.classList.add('-translate-x-full');
-        overlay.classList.add('hidden');
-      });
-
-      let scale = 1;
-      let originX = 0;
-      let originY = 0;
-
-      imgElem.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        const rect = imgElem.getBoundingClientRect();
-        originX = ((e.clientX - rect.left) / rect.width) * 100;
-        originY = ((e.clientY - rect.top) / rect.height) * 100;
-        scale += e.deltaY * -0.001;
-        scale = Math.min(Math.max(0.5, scale), 3);
-        imgElem.style.transformOrigin = `${originX}% ${originY}%`;
-        imgElem.style.transform = `scale(${scale})`;
-      });
-
-      let isDragging = false;
-      let startX, startY;
-      let currentX = 0, currentY = 0;
-
-      imgElem.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.clientX - currentX;
-        startY = e.clientY - currentY;
-      });
-
-      document.addEventListener('mouseup', () => {
-        isDragging = false;
-      });
-
-      document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        currentX = e.clientX - startX;
-        currentY = e.clientY - startY;
-        imgElem.style.left = `${currentX}px`;
-        imgElem.style.top = `${currentY}px`;
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') document.getElementById('btn_PrevPagine').click();
-        if (e.key === 'ArrowRight') document.getElementById('btn_NextPagine').click();
-      });
-
-
-const elem = document.getElementById('img');
-  const panzoom = Panzoom(elem, {
-    maxScale: 5,
-    minScale: 1,
-    contain: 'outside'
-  });
-
-      
-
-  // Abilita lo zoom con la rotella del mouse
-  document.getElementById('contenitore').addEventListener('wheel', panzoom.zoomWithWheel);
-
-    };
-  </script>
-</body>
+    <!-- Image Viewer -->
+    <main
+      class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden"
+    >
+      <button
+        id="btn_PrevPagine"
+        class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10"
+      >
+        ←
+      </button>
+      <div id="contenitore">
+        <img id="img" src="" alt="OnePiece Page" class="" />
+      </div>
+      <button
+        id="btn_NextPagine"
+        class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10"
+      >
+        →
+      </button>
+    </main>
+  </body>
 </html>
