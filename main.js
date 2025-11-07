@@ -18,6 +18,12 @@ window.onload = function () {
 
   const stato = caricaStato();
   if (stato) {
+    if(stato.volume){
+      reader.ElemVolume.set(1);
+    }
+    if( stato.capitolo){
+      reader.ElemCapitolo.set(1);
+    }
     reader.ElemVolume.set(stato.volume);
     reader.ElemCapitolo.set(stato.capitolo);
     reader.setPagina(parseInt(stato.pagina));
