@@ -3,9 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manga Reader</title>
+    <title>OnePiece Reader</title>
     <link rel="icon" href="OnePiece.svg" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
+
     <script type="module" src="main.js" defer></script>
     <script>
       tailwind.config = {
@@ -28,99 +30,62 @@
     <!-- Header -->
     <header class="flex justify-between items-center p-4 bg-gray-800 shadow-md">
       <div class="flex items-center gap-4">
-        <button
-          id="btn_drawer"
-          class="text-white bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded"
-        >
-          ☰
-        </button>
-        <h1 id="titolo" class="text-xl font-bold">Titolo</h1>
+      <button id="btn_drawer" class="text-white bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <h1 id="titolo" class="text-xl font-bold">Titolo</h1>
+        
+      <button id="btn_PrevPagine" class="text-white">
+        <span class="material-symbols-outlined">arrow_back_ios</span>
+      </button>
+
+      <button id="btn_NextPagine" class="text-white ">
+        <span class="material-symbols-outlined">arrow_forward_ios</span>
+      </button>
       </div>
     </header>
 
     <!-- Drawer -->
-    <aside
-      id="drawer"
-      class="fixed top-0 left-0 h-full w-72 bg-gray-800 text-white transform -translate-x-full transition-transform duration-300 z-50"
-    >
-      <div class="p-4 border-b border-gray-700 font-bold text-lg">Menu</div>
+    <aside id="drawer" class="fixed top-0 left-0 h-full w-72 bg-gray-800 text-white transform -translate-x-full transition-transform duration-300 z-50">
+      <div class="p-4 border-b border-gray-700 font-bold text-lg">
+        <img src="OnePiece.svg" alt="">
+      </div>
       <nav class="flex flex-col p-4 gap-4">
         <label for="volume">Volume</label>
         <div class="flex gap-2 items-center">
-          <button
-            id="btn_PrevVolume"
-            class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded"
-          >
-            -
+          <button id="btn_PrevVolume" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">
+            <span class="material-symbols-outlined">remove</span>
           </button>
-          <input
-            type="text"
-            id="volume"
-            value="1"
-            class="text-black px-2 py-1 rounded w-16 text-center"
-          />
-          <button
-            id="btn_NextVolume"
-            class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded"
-          >
-            +
+          <input type="text" id="volume" value="1" class="text-black px-2 py-1 rounded w-16 text-center"/>
+          <button id="btn_NextVolume" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">
+          <span class="material-symbols-outlined">add</span>
           </button>
         </div>
         <label for="capitolo">Capitolo</label>
         <div class="flex gap-2 items-center">
-          <button
-            id="btn_PrevCapitolo"
-            class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded"
-          >
-            -
+          <button id="btn_PrevCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">
+          <span class="material-symbols-outlined">remove</span>
           </button>
-          <input
-            type="text"
-            id="capitolo"
-            value="1"
-            class="text-black px-2 py-1 rounded w-16 text-center"
-          />
-          <button
-            id="btn_NextCapitolo"
-            class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded"
-          >
-            +
+          <input type="text" id="capitolo" value="1" class="text-black px-2 py-1 rounded w-16 text-center"/>
+          <button id="btn_NextCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">
+            <span class="material-symbols-outlined">add</span>
           </button>
         </div>
-        <button
-          id="btn_go"
-          class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded font-bold"
-        >
+        <button id="btn_go" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded font-bold">
           Leggi
         </button>
       </nav>
     </aside>
 
     <!-- Overlay -->
-    <div
-      id="overlay"
-      class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"
-    ></div>
+    <div id="overlay"class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
 
     <!-- Image Viewer -->
-    <main
-      class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden"
-    >
-      <button
-        id="btn_PrevPagine"
-        class="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10"
-      >
-        ←
+    <main class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
       </button>
       <div id="1contenitore">
         <img id="img" src="" alt="OnePiece Page" class="" />
       </div>
-      <button
-        id="btn_NextPagine"
-        class="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 text-white bg-gray-700 hover:bg-gray-600 p-2 sm:p-3 rounded-full z-10"
-      >
-        →
-      </button>
     </main>
   </body>
 </html>
