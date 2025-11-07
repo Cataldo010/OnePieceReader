@@ -1,4 +1,4 @@
-import { OnePieceCapitolo } from "./MangaStructure.js";
+import { MangaStructure } from "./MangaStructure.js";
 import { salvaStato, caricaStato } from "./MangaStructure.js";
 
 window.onload = function () {
@@ -8,7 +8,7 @@ window.onload = function () {
   const imgElem = document.getElementById("img");
   const titolo = document.getElementById("titolo");
 
-  let reader = new OnePieceCapitolo(
+  let reader = new MangaStructure(
     volumeElem,
     capitoloElem,
     paginaElem,
