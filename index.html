@@ -18,12 +18,16 @@
       body {
         transition: background-color 0.3s, color 0.3s;
       }
-      #img {
-        cursor: grab;
+      #img{
+        display:block;
+        --webkit-user-select: none;
+        margin: auto;
+        background-color: hsl(0, 0%, 90%);
+        transition: background-color 300ms;
+        height: 1200px;
+        width: auto;
       }
-      #img:active {
-        cursor: grabbing;
-      }
+
     </style>
   </head>
   <body id="body" class="dark bg-gray-900 text-white h-screen overflow-hidden">
@@ -84,7 +88,7 @@
     <main class="relative w-full h-full flex items-center justify-center bg-black overflow-hidden">
       </button>
       <div id="1contenitore">
-        <img id="img" src="" alt="OnePiece Page" class="" />
+        <img id="img" src="" alt="OnePiece Page" />
       </div>
     </main>
   </body>
