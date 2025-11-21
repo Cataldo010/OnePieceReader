@@ -10,6 +10,7 @@ class MangaStructure {
       this.BasePath = `https://onepiecepower.com/manga8/onepiece/volumi/volume`;
       this.Titolo = titolo;
       this.onePieceMangaList = new MangaList();
+      this.frame = document.getElementById("iframe");
   }
   nextPagina() {
     this.Pagina++;
@@ -27,9 +28,8 @@ class MangaStructure {
   }
   updateImg() {
     this.Titolo.textContent  = this.onePieceMangaList.getTitolo(this.ElemVolume.element.value, this.ElemCapitolo.element.value);
-    this.img.src = `${
-      this.BasePath
-    }${this.ElemVolume.getPad()}/${this.ElemCapitolo.getPad()}/${this.PaginaPad()}.jpg`;
+    var url =`${this.BasePath}${this.ElemVolume.getPad()}/${this.ElemCapitolo.getPad()}/${this.PaginaPad()}.jpg`
+    this.img.src = url;
     this.saveToStorage();
   }
   saveToStorage() {

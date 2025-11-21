@@ -1381,7 +1381,8 @@ export class MangaList {
       new Manga(114, 1162, "G.V.B.R."),
       new Manga(114, 1163, "La promessa"),
       new Manga(114, 1164, "Il sangue dei Davy"),
-      new Manga(114, 1165, "Riverbero"),
+      new Manga(114, 1165, "Eco"),
+      new Manga(115, 1166, "Nuove storie"),
     ];
   }
 
