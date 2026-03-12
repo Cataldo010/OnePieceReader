@@ -1383,6 +1383,16 @@ export class MangaList {
       new Manga(114, 1164, "Il sangue dei Davy"),
       new Manga(114, 1165, "Eco"),
       new Manga(115, 1166, "Nuove storie"),
+      new Manga(115, 1167, "Il figlio di Ida"),
+      new Manga(115, 1168, "Le navi di Elbaph"),
+      new Manga(115, 1169, "Devo morire subito"),
+      new Manga(115, 1170, "Opposti"),
+      new Manga(115, 1171, "Ragnir"),
+      new Manga(115, 1172, "L'Elbaph che ammiro"),
+      new Manga(115, 1173, "Una generazione di guerrieri"),
+      new Manga(115, 1174, "Ció che c'é di piú forte al mondo"),
+      new Manga(115, 1175, "Niddhogger"),
+      new Manga(116, 1176, "Nuove storie"),
     ];
   }
 
