@@ -153,6 +153,36 @@ const volumeDisplay = document.getElementById("volume-display");
 const chapterDisplay = document.getElementById("chapter-display");
 const pageDisplay = document.getElementById("page-display");
 
+
+// --- Swipe support per mobile ---
+let touchStartX = 0;
+let touchEndX = 0;
+const swipeThreshold = 50; // distanza minima per considerare swipe
+
+const viewer = document.getElementById("viewer");
+
+viewer.addEventListener("touchstart", function(e){
+    touchStartX = e.changedTouches[0].screenX;
+}, false);
+
+viewer.addEventListener("touchend", function(e){
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+}, false);
+
+function handleSwipe(){
+    const deltaX = touchEndX - touchStartX;
+    if(Math.abs(deltaX) > swipeThreshold){
+        if(deltaX < 0){
+            // swipe left → pagina successiva
+            nextPage();
+        } else {
+            // swipe right → pagina precedente
+            prevPage();
+        }
+    }
+}
+
 // toggle menu
 hamburger.addEventListener("click", ()=> { menu.classList.toggle("show"); });
 
