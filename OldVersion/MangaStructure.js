@@ -30,6 +30,7 @@ class MangaStructure {
     this.Titolo.textContent  = this.onePieceMangaList.getTitolo(this.ElemVolume.element.value, this.ElemCapitolo.element.value);
     var url =`${this.BasePath}${this.ElemVolume.getPad()}/${this.ElemCapitolo.getPad()}/${this.PaginaPad()}.jpg`
     this.img.src = url;
+    document.getElementsByTagName("Body").Background = url;
     this.saveToStorage();
   }
   saveToStorage() {

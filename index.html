@@ -1,96 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OnePiece Reader</title>
-    <link rel="icon" href="OnePiece.svg" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com"></script>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OnePiece Reader</title>
+<link rel="icon" href="OnePiece.svg" type="image/x-icon" />
 
-    <script type="module" src="main.js" defer></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-      };
-    </script>
-    <style>
-      body {
-        transition: background-color 0.3s, color 0.3s;
-      }
-      #img{
-        display:block;
-        --webkit-user-select: none;
-        margin: auto;
-        background-color: hsl(0, 0%, 90%);
-        transition: background-color 300ms;
-        height: 1200px;
-        width: auto;
-      }
+<style>
+body{
+    margin:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#111;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+}
+header{
+    background:#1e1e1e;
+    padding:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    position:relative;
+}
+#hamburger{
+    display: flex;
+    justify-content: center;
+    font-size:24px;
+    cursor:pointer;
+}
+#menu{
+    display:none;
+    position:absolute;
+    top:50px;
+    left:0;
+    width:100%;
+    background:#222;
+    flex-direction:column;
+    padding:10px;
+    gap:10px;
+    z-index:10;
+}
 
-    </style>
-  </head>
-  <body id="body" class="dark bg-gray-900 text-white h-screen overflow-hidden">
-    <!-- Header -->
-    <header class="flex justify-between items-center p-4 bg-gray-800 shadow-md">
-      <div class="flex items-center gap-4">
-      <button id="btn_drawer" class="text-white bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded">
-        <span class="material-symbols-outlined">menu</span>
-      </button>
-      <h1 id="titolo" class="text-xl font-bold">Titolo</h1>
-        
-      <button id="btn_PrevPagine" class="text-white">
-        <span class="material-symbols-outlined">arrow_back_ios</span>
-      </button>
+.svgManu{
+    height: 50px;
+}
+#menu.show{ display:flex; }
+.menu-row{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+#viewer{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:auto;
+}
+#viewer img{
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+}
+#page-controls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+    align-items:center;
+    padding:10px;
+    background:#1e1e1e;
+}
+button{ padding:6px 12px; font-size:16px; cursor:pointer; }
+footer{
+    background:#1e1e1e;
+    padding:8px;
+    text-align:center;
+    font-size:14px;
+}
+@media (max-width:700px){
+    #page-controls{ flex-direction:column; }
+    .menu-row{ flex-direction:column; }
+}
+span{ padding:6px 12px; font-size:16px; text-align:center; min-width:40px; display:inline-block; }
+</style>
+</head>
+<body>
 
-      <button id="btn_NextPagine" class="text-white ">
-        <span class="material-symbols-outlined">arrow_forward_ios</span>
-      </button>
-      </div>
-    </header>
-
-    <!-- Drawer -->
-    <aside id="drawer" class="fixed top-0 left-0 h-full w-72 bg-gray-800 text-white transform -translate-x-full transition-transform duration-300 z-50">
-      <div class="p-4 border-b border-gray-700 font-bold text-lg">
-        <img src="OnePiece.svg" alt="">
-      </div>
-      <nav class="flex flex-col p-4 gap-4">
-        <label for="volume">Volume</label>
-        <div class="flex gap-2 items-center">
-          <button id="btn_PrevVolume" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">
-            <span class="material-symbols-outlined">remove</span>
-          </button>
-          <input type="text" id="volume" value="1" class="text-black px-2 py-1 rounded w-16 text-center"/>
-          <button id="btn_NextVolume" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">
-          <span class="material-symbols-outlined">add</span>
-          </button>
+<header>
+    <div id="hamburger">
+        <img src="OnePiece.svg" alt="" class="svgManu" id="hamburger">
+        <div id="page-controls">
+            <button onclick="prevPage()">◀ Pagina</button>
+            <span id="page-display">1</span>
+            <button onclick="nextPage()">Pagina ▶</button>
         </div>
-        <label for="capitolo">Capitolo</label>
-        <div class="flex gap-2 items-center">
-          <button id="btn_PrevCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">
-          <span class="material-symbols-outlined">remove</span>
-          </button>
-          <input type="text" id="capitolo" value="1" class="text-black px-2 py-1 rounded w-16 text-center"/>
-          <button id="btn_NextCapitolo" class="px-2 py-1 bg-indigo-600 hover:bg-indigo-700 rounded">
-            <span class="material-symbols-outlined">add</span>
-          </button>
-        </div>
-        <button id="btn_go" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded font-bold">
-          Leggi
-        </button>
-      </nav>
-    </aside>
-
-    <!-- Overlay -->
-    <div id="overlay"class="fixed inset-0 bg-black bg-opacity-50 hidden z-40"></div>
-
-    <!-- Image Viewer -->
-     <div style="display: flex; align-items: center; justify-content: center; width:100%; height:100%;">
-
-       <iframe id="img" src="" alt="OnePiece Page" src="" style="width:100%; height:100%; border:none;display: flex; align-items: center; justify-content: center;">
-      </iframe>
     </div>
+    <div id="menu">
+        <img src="OnePiece.svg" alt="" class="svgManu">
+        <div class="menu-row">
+            <button onclick="prevVolume(100)">◀ -100</button>
+            <button onclick="prevVolume(50)">◀ -50</button>
+            <button onclick="prevVolume(10)">◀ -10</button>
+            <button onclick="prevVolume(5)">◀ -5</button>
+            <button onclick="prevVolume(1)">◀ -1</button>
+            <span id="volume-display">001</span>
+            <button onclick="nextVolume(1)">+1 ▶</button>
+            <button onclick="nextVolume(5)">+5 ▶</button>
+            <button onclick="nextVolume(10)">+10 ▶</button>
+            <button onclick="nextVolume(50)">+50 ▶</button>
+            <button onclick="nextVolume(100)">+100 ▶</button>
+        </div>
+        <div class="menu-row">
+            <button onclick="prevChapter(100)">◀ -100</button>
+            <button onclick="prevChapter(50)">◀ -50</button>
+            <button onclick="prevChapter(10)">◀ -10</button>
+            <button onclick="prevChapter(5)">◀ -5</button>
+            <button onclick="prevChapter(1)">◀ -1</button>
+            <span id="chapter-display">001</span>
+            <button onclick="nextChapter(1)">+1 ▶</button>
+            <button onclick="nextChapter(5)">+5 ▶</button>
+            <button onclick="nextChapter(10)">+10 ▶</button>
+            <button onclick="nextChapter(50)">+50 ▶</button>
+            <button onclick="nextChapter(100)">+100 ▶</button>
+        </div>
+        <button onclick="reloadImage()">Carica</button>
+    </div>
+</header>
 
-    
-  </body>
+<div id="viewer">
+    <img id="mangaImage">
+</div>
+
+
+<footer>
+← → pagina | ↑ ↓ capitolo
+</footer>
+
+<script>
+const baseURL = "https://onepiecepower.com/manga8/onepiece/volumi/volume{v}/{c}/{p}.jpg";
+
+let volume = parseInt(localStorage.getItem("volume")) || 1;
+let chapter = parseInt(localStorage.getItem("chapter")) || 1;
+let page = parseInt(localStorage.getItem("page")) || 1;
+
+const img = document.getElementById("mangaImage");
+const menu = document.getElementById("menu");
+const hamburger = document.getElementById("hamburger");
+
+const volumeDisplay = document.getElementById("volume-display");
+const chapterDisplay = document.getElementById("chapter-display");
+const pageDisplay = document.getElementById("page-display");
+
+// toggle menu
+hamburger.addEventListener("click", ()=> { menu.classList.toggle("show"); });
+
+// costruisce URL con padding 3 cifre
+function buildURL(){
+    const volStr = String(volume).padStart(3,'0');
+    const chapStr = String(chapter).padStart(3,'0');
+    const pagStr = String(page).padStart(2,'0');
+    return baseURL.replace("{v}", volStr).replace("{c}", chapStr).replace("{p}", pagStr);
+}
+
+function saveState(){
+    localStorage.setItem("volume", volume);
+    localStorage.setItem("chapter", chapter);
+    localStorage.setItem("page", page);
+}
+
+function updateDisplays(){
+    volumeDisplay.textContent = String(volume).padStart(3,'0');
+    chapterDisplay.textContent = String(chapter).padStart(3,'0');
+    pageDisplay.textContent = page;
+}
+
+function reloadImage(){
+    img.src = buildURL();
+    saveState();
+    updateDisplays();
+}
+
+// pagine
+function nextPage(){ page++; reloadImage(); }
+function prevPage(){ if(page>1){ page--; reloadImage(); } }
+
+// gestione volume
+function nextVolume(n){
+    volume += n;
+    if(volume < 1) volume = 1;
+    page = 1;
+    reloadImage();
+}
+function prevVolume(n){
+    volume -= n;
+    if(volume < 1) volume = 1;
+    page = 1;
+    reloadImage();
+}
+
+// gestione capitolo
+function nextChapter(n){
+    chapter += n;
+    if(chapter < 1) chapter = 1;
+    page = 1;
+    reloadImage();
+}
+function prevChapter(n){
+    chapter -= n;
+    if(chapter < 1) chapter = 1;
+    page = 1;
+    reloadImage();
+}
+
+// errore immagine → pagina non può scendere sotto 1
+//img.onerror = function(){ if(page>1){ page--; reloadImage();} };
+
+// tastiera
+document.addEventListener("keydown", e=>{
+    if(e.key==="ArrowRight") nextPage();
+    if(e.key==="ArrowLeft") prevPage();
+});
+
+reloadImage();
+</script>
+
+</body>
 </html>
