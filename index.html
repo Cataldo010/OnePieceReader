@@ -162,7 +162,7 @@ function buildURL(){
     const volStr = String(volume).padStart(3,'0');
     const chapStr = String(chapter).padStart(3,'0');
     const pagStr = String(page).padStart(2,'0');
-    if (chapter >= 117) {
+    if (chapter >= 116) {
         return baseURL.replace("{v}", volStr).replace("{c}", chapStr).replace("{p}", pagStr);
         
     }else{
