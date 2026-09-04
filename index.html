@@ -140,6 +140,7 @@ span{ padding:6px 12px; font-size:16px; text-align:center; min-width:40px; displ
 
 <script>
 const baseURL = "https://onepiecepower.com/manga8/onepiece/volumi/volume{v}/{c}/{p}.jpg";
+const baseURL_2 = "https://onepiecepower.com/manga8/onepiece/volumi/volume{v}/capitolo{c}/{p}.jpg";
 
 let volume = parseInt(localStorage.getItem("volume")) || 1;
 let chapter = parseInt(localStorage.getItem("chapter")) || 1;
@@ -161,7 +162,13 @@ function buildURL(){
     const volStr = String(volume).padStart(3,'0');
     const chapStr = String(chapter).padStart(3,'0');
     const pagStr = String(page).padStart(2,'0');
-    return baseURL.replace("{v}", volStr).replace("{c}", chapStr).replace("{p}", pagStr);
+    if (chapter >= 117) {
+        return baseURL.replace("{v}", volStr).replace("{c}", chapStr).replace("{p}", pagStr);
+        
+    }else{
+        return baseURL_2.replace("{v}", volStr).replace("{c}", chapStr).replace("{p}", pagStr);
+        
+    }
 }
 
 function saveState(){
